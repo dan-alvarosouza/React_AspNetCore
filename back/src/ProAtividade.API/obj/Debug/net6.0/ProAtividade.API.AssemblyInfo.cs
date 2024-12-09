@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProAtividade.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8945ecf04b49488f85802c638f4d6c1b2ac532b4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+649e57620bcab5eb9713be724a1da478c505a3c9")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProAtividade.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProAtividade.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
