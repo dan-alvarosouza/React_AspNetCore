@@ -18,7 +18,7 @@ namespace ProAtividade.Data.Migrations
                     Title = table.Column<string>(type: "varchar(100)", nullable: false),
                     Description = table.Column<string>(type: "varchar(250)", nullable: false),
                     CreationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ConclusionDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ConclusionDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Priority = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
