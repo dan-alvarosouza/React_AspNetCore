@@ -11,41 +11,90 @@ namespace ProAtividade.Domain.Services
     public class ActivityService : IActivityService
     {
         private readonly IActivityRepo _activityRepo;
-        private readonly IGeneralRepo _generalRepo;
 
-        public ActivityService(IActivityRepo activityRepo, IGenerealRepo generalRepo)
+        public ActivityService(IActivityRepo activityRepo)
         {
             _activityRepo = activityRepo;
-            _generalRepo = generalRepo;
         }
-        public Task<Activity> AddActivity(Activity model)
+        public async Task<Activity> AddActivity(Activity model)
         {
-            throw new NotImplementedException();
+            if (await _activityRepo.GetByTitleAsync(model.Title) != null)
+                throw new Exception("Já existe uma atividade com esse título.");
+            
+            if (await _activityRepo.GetByIdAsync(model.Id) == null)
+            {
+                _activityRepo.Add(model);
+                if(await _activityRepo.SaveChangesAsync())
+                    return model;
+            }
+
+            return null;
         }
 
-        public Task<Activity> UpdateActivity(Activity model)
+        public async Task<Activity> UpdateActivity(Activity model)
         {
-            throw new NotImplementedException();
+            if (model.ConclusionDate != null)
+                throw new Exception("Não dá para atualizar uma atividade já concluída.");
+
+            if (await _activityRepo.GetByIdAsync(model.Id) == null)
+            {
+                _activityRepo.Update(model);
+                if(await _activityRepo.SaveChangesAsync())
+                    return model;
+            }
+
+            return null;
         }
 
-        public Task<Activity> FinishActivity(Activity model)
+        public async Task<bool> FinishActivity(Activity model)
         {
-            throw new NotImplementedException();
+            if (model != null)
+            {
+                model.Finish();
+                _activityRepo.Update<Activity>(model);
+                return await _activityRepo.SaveChangesAsync();
+            }
+
+            return false;
         }
 
-        public Task<Activity> DeleteActivity(int activityId)
+        public async Task<bool> DeleteActivity(int activityId)
         {
-            throw new NotImplementedException();
+            var activity = await _activityRepo.GetByIdAsync(activityId);
+            if (activity == null) throw new Exception("Esta atividade não existe.");
+
+            _activityRepo.Delete(activity);
+            return await _activityRepo.SaveChangesAsync();
         }
 
-        public Task<Activity> GetActivityByIdAsync(int activityId)
+        public async Task<Activity> GetActivityByIdAsync(int activityId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var activity = await _activityRepo.GetByIdAsync(activityId);
+                if (activity == null) return null;
+
+                return activity;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public Task<Activity[]> GetAllActivitiesAsync()
+        public async Task<Activity[]> GetAllActivitiesAsync()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var activities = await _activityRepo.GetAllAsync();
+                if (activities == null) return null;
+
+                return activities;
+            }
+            catch (System.Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

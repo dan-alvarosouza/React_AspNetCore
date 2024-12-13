@@ -22,7 +22,7 @@ namespace ProAtividade.Domain.Entities
             Description = description;
         }
 
-        public void Conclusion()
+        public void Finish()
         {
             if (ConclusionDate == null)
                 ConclusionDate = DateTime.Now;
