@@ -96,5 +96,10 @@ namespace ProAtividade.Domain.Services
                 throw new Exception(ex.Message);
             }
         }
+
+        Task<Activity> IActivityService.GetAllActivitiesAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
